@@ -1,0 +1,39 @@
+# macOS
+.DS_Store
+
+# Java
+target/
+*.class
+*.jar
+*.war
+.idea/
+*.iml
+.settings/
+.project
+.classpath
+
+# Node
+node_modules/
+dist/
+build/
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+
+# Docker
+docker-data/
+
+# AWS
+*.pem
+
+# Elasticsearch
+es-data/
+
+# Environment
+application-local.yml
