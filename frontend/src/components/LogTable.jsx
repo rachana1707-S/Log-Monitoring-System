@@ -1,6 +1,18 @@
 import SeverityBadge from "./SeverityBadge";
 
-const LogTable = ({ logs }) => {
+const LogTable = ({ logs = [] }) => {
+    const formatTime = (timestamp) => {
+        if (!timestamp) {
+            return "-";
+        }
+
+        return new Date(timestamp).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+    };
+
     return (
         <div className="log-table-container">
             <table className="log-table">
@@ -17,30 +29,41 @@ const LogTable = ({ logs }) => {
                 <tbody>
                     {logs.length === 0 ? (
                         <tr>
-                            <td colSpan="5" className="no-logs">
+                            <td
+                                colSpan="5"
+                                className="no-logs"
+                            >
                                 No logs found
                             </td>
                         </tr>
                     ) : (
                         logs.map((log) => (
                             <tr key={log.id}>
-                                <td>
-                                    {log.timestamp
-                                        ? new Date(log.timestamp).toLocaleTimeString()
-                                        : "-"}
+                                <td className="time-cell">
+                                    {formatTime(log.timestamp)}
                                 </td>
 
                                 <td>
-                                    <SeverityBadge level={log.level} />
+                                    <SeverityBadge
+                                        level={log.level}
+                                    />
                                 </td>
 
-                                <td>{log.service}</td>
+                                <td>
+                                    <span className="service-name">
+                                        {log.service}
+                                    </span>
+                                </td>
 
                                 <td className="log-message">
                                     {log.message}
                                 </td>
 
-                                <td>{log.environment}</td>
+                                <td>
+                                    <span className="environment-badge">
+                                        {log.environment || "-"}
+                                    </span>
+                                </td>
                             </tr>
                         ))
                     )}

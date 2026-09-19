@@ -10,7 +10,7 @@ export const getLogs = async () => {
 export const getLogsByService = async (service) => {
     const response = await axios.get(API_URL, {
         params: {
-            service: service
+            service
         }
     });
 
@@ -20,7 +20,7 @@ export const getLogsByService = async (service) => {
 export const getLogsByLevel = async (level) => {
     const response = await axios.get(API_URL, {
         params: {
-            level: level
+            level
         }
     });
 

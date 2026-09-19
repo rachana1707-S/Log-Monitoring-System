@@ -1,11 +1,6 @@
-import {
-    BrowserRouter,
-    Route,
-    Routes
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
-
 import Dashboard from "./pages/Dashboard";
 import Logs from "./pages/Logs";
 import Services from "./pages/Services";
@@ -21,25 +16,10 @@ function App() {
 
                 <main className="main-content">
                     <Routes>
-                        <Route
-                            path="/"
-                            element={<Dashboard />}
-                        />
-
-                        <Route
-                            path="/logs"
-                            element={<Logs />}
-                        />
-
-                        <Route
-                            path="/services"
-                            element={<Services />}
-                        />
-
-                        <Route
-                            path="/alerts"
-                            element={<Alerts />}
-                        />
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/logs" element={<Logs />} />
+                        <Route path="/services" element={<Services />} />
+                        <Route path="/alerts" element={<Alerts />} />
                     </Routes>
                 </main>
             </div>

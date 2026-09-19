@@ -6,19 +6,32 @@ html,
 body,
 #root {
     margin: 0;
+    width: 100%;
     min-height: 100%;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
+    min-width: 320px;
+    min-height: 100vh;
+
     font-family:
         Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
         sans-serif;
 
-    background: #f5f7fa;
+    background: #f7fafb;
     color: #1f2937;
+
+    -webkit-font-smoothing: antialiased;
 }
 
 button,
@@ -29,4 +42,12 @@ select {
 
 button {
     cursor: pointer;
+}
+
+a {
+    color: inherit;
+}
+
+#root {
+    min-height: 100vh;
 }
