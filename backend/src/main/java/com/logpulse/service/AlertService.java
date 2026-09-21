@@ -4,16 +4,19 @@ import com.logpulse.model.Alert;
 import com.logpulse.model.AlertStatus;
 import com.logpulse.model.LogEntry;
 import com.logpulse.model.LogLevel;
+import com.logpulse.repository.AlertRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
+@RequiredArgsConstructor
 public class AlertService {
 
-    private final List<Alert> alerts=new ArrayList<>();
+    private final AlertRepository alertRepository;
 
     public void processLog(LogEntry log) {
         if(log.getLevel()==null){
@@ -26,38 +29,50 @@ public class AlertService {
         }
 
         Alert alert=Alert.fromLog(log);
-        alerts.add(alert);
+
+        alertRepository.save(alert);
+
+        System.out.println(
+                "Alert created for service: "
+                        +log.getService()
+        );
     }
 
     public List<Alert> getAlerts() {
-        return alerts.stream()
-                .sorted(Comparator.comparing(
-                        Alert::getTimestamp,
-                        Comparator.nullsLast(
-                                Comparator.naturalOrder()
-                        )
-                ).reversed())
+        return StreamSupport
+                .stream(
+                        alertRepository.findAll().spliterator(),
+                        false
+                )
+                .sorted(
+                        Comparator.comparing(
+                                Alert::getTimestamp,
+                                Comparator.nullsLast(
+                                        Comparator.naturalOrder()
+                                )
+                        ).reversed()
+                )
                 .toList();
     }
 
     public List<Alert> getActiveAlerts() {
-        return alerts.stream()
-                .filter(alert->
-                        alert.getStatus()==AlertStatus.ACTIVE
+        return alertRepository
+                .findByStatus(AlertStatus.ACTIVE)
+                .stream()
+                .sorted(
+                        Comparator.comparing(
+                                Alert::getTimestamp,
+                                Comparator.nullsLast(
+                                        Comparator.naturalOrder()
+                                )
+                        ).reversed()
                 )
-                .sorted(Comparator.comparing(
-                        Alert::getTimestamp,
-                        Comparator.nullsLast(
-                                Comparator.naturalOrder()
-                        )
-                ).reversed())
                 .toList();
     }
 
     public Alert resolveAlert(String id) {
-        Alert alert=alerts.stream()
-                .filter(item->item.getId().equals(id))
-                .findFirst()
+        Alert alert=alertRepository
+                .findById(id)
                 .orElseThrow(()->
                         new IllegalArgumentException(
                                 "Alert not found"
@@ -66,6 +81,6 @@ public class AlertService {
 
         alert.setStatus(AlertStatus.RESOLVED);
 
-        return alert;
+        return alertRepository.save(alert);
     }
 }
