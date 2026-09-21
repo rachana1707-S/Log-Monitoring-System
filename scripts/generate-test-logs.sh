@@ -1,72 +1,59 @@
 #!/bin/bash
 
 SERVICES=(
-    "payment-service"
-    "auth-service"
-    "order-service"
-    "api-gateway"
+  "api-gateway"
+  "auth-service"
+  "order-service"
+  "payment-service"
 )
 
 LEVELS=(
-    "INFO"
-    "INFO"
-    "INFO"
-    "WARN"
-    "ERROR"
+  "INFO"
+  "INFO"
+  "INFO"
+  "WARN"
+  "ERROR"
 )
 
 MESSAGES=(
-    "Request completed successfully"
-    "User authentication completed"
-    "Database query completed"
-    "Response time exceeded threshold"
-    "Connection timeout detected"
-    "Payment processing completed"
-    "Order created successfully"
-    "External API request completed"
+  "Incoming API request received"
+  "User authentication completed"
+  "Order created successfully"
+  "Payment processed successfully"
+  "Database query completed"
+  "Response time exceeded threshold"
+  "External service responded slowly"
+  "Payment gateway timeout"
+  "Database connection failed"
+  "Unauthorized request detected"
 )
 
-for i in {1..40}
+echo "Generating LogPulse test traffic..."
+echo
+
+for i in {1..50}
 do
+  SERVICE=${SERVICES[$RANDOM % ${#SERVICES[@]}]}
+  LEVEL=${LEVELS[$RANDOM % ${#LEVELS[@]}]}
+  MESSAGE=${MESSAGES[$RANDOM % ${#MESSAGES[@]}]}
+  HOST="server-$((RANDOM % 4 + 1))"
+  TRACE_ID="trace-$i"
 
-    SERVICE=${
-        SERVICES[
-            $RANDOM %
-            ${#SERVICES[@]}
-        ]
-    }
+  curl -s -X POST http://localhost:8080/api/logs \
+    -H "Content-Type: application/json" \
+    -d "{
+      \"service\":\"$SERVICE\",
+      \"level\":\"$LEVEL\",
+      \"message\":\"$MESSAGE\",
+      \"traceId\":\"$TRACE_ID\",
+      \"environment\":\"production\",
+      \"host\":\"$HOST\"
+    }"
 
-    LEVEL=${
-        LEVELS[
-            $RANDOM %
-            ${#LEVELS[@]}
-        ]
-    }
+  echo
 
-    MESSAGE=${
-        MESSAGES[
-            $RANDOM %
-            ${#MESSAGES[@]}
-        ]
-    }
-
-    curl -s \
-        -X POST \
-        http://localhost:8080/api/logs \
-        -H "Content-Type: application/json" \
-        -d "{
-            \"service\":\"$SERVICE\",
-            \"level\":\"$LEVEL\",
-            \"message\":\"$MESSAGE\",
-            \"traceId\":\"trace-$i\",
-            \"environment\":\"production\",
-            \"host\":\"server-$((RANDOM % 5 + 1))\"
-        }"
-
-    echo
-
-    sleep 0.3
-
+  sleep 0.2
 done
 
-echo "Finished generating logs."
+echo
+echo "Finished generating 50 logs."
