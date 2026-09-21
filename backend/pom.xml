@@ -50,6 +50,16 @@
 
 
 		<!-- ========================= -->
+		<!-- Spring WebSocket         -->
+		<!-- ========================= -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+
+
+		<!-- ========================= -->
 		<!-- Validation               -->
 		<!-- ========================= -->
 
@@ -82,7 +92,6 @@
 		<!-- ========================= -->
 		<!-- Jackson Java Time        -->
 		<!-- Supports Instant         -->
-		<!-- LocalDateTime etc.       -->
 		<!-- ========================= -->
 
 		<dependency>
