@@ -1,23 +1,48 @@
-const MetricCard = ({ title, value, icon, type = "default" }) => {
+import { FiArrowUpRight } from "react-icons/fi";
+
+const MetricCard = ({
+    title,
+    value,
+    icon,
+    type = "primary",
+    subtitle
+}) => {
+
     return (
-        <div className={`metric-card metric-${type}`}>
+        <div className={`metric-card ${type}`}>
+
             <div className="metric-card-top">
-                <div className="metric-icon">
+
+                <div
+                    className={`metric-icon ${type}`}
+                >
                     {icon}
                 </div>
 
-                <span className="metric-indicator"></span>
+                <div className="metric-trend">
+                    <FiArrowUpRight />
+                </div>
+
             </div>
 
             <div className="metric-content">
-                <p className="metric-title">
-                    {title}
-                </p>
 
-                <h2 className="metric-value">
+                <span className="metric-title">
+                    {title}
+                </span>
+
+                <h2>
                     {value}
                 </h2>
+
+                {subtitle && (
+                    <p>
+                        {subtitle}
+                    </p>
+                )}
+
             </div>
+
         </div>
     );
 };
