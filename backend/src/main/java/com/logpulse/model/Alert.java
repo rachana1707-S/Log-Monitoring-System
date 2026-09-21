@@ -10,7 +10,6 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -37,23 +36,18 @@ public class Alert {
     @Field(type=FieldType.Keyword)
     private AlertStatus status;
 
+    @Field(type=FieldType.Keyword)
+    private AlertRuleType ruleType;
+
+    @Field(type=FieldType.Integer)
+    private Integer threshold;
+
+    @Field(type=FieldType.Integer)
+    private Integer windowSeconds;
+
+    @Field(type=FieldType.Integer)
+    private Integer observedCount;
+
     @Field(type=FieldType.Date)
     private Instant timestamp;
-
-    public static Alert fromLog(LogEntry log) {
-        AlertSeverity severity=
-                log.getLevel()==LogLevel.FATAL
-                        ?AlertSeverity.CRITICAL
-                        :AlertSeverity.HIGH;
-
-        return Alert.builder()
-                .id(UUID.randomUUID().toString())
-                .service(log.getService())
-                .severity(severity)
-                .message(log.getMessage())
-                .traceId(log.getTraceId())
-                .status(AlertStatus.ACTIVE)
-                .timestamp(Instant.now())
-                .build();
-    }
 }

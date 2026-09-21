@@ -3098,3 +3098,74 @@
         width:100%;
     }
 }
+
+/* =========================
+   ALERT RULE DETAILS
+========================= */
+
+.alert-rule-info{
+    margin-top:12px;
+    padding:11px 12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    background:#f7fafb;
+    border:1px solid #dce7ea;
+    border-radius:8px;
+}
+
+.alert-rule-title{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.alert-rule-title span{
+    color:var(--text-light);
+    font-size:8px;
+    font-weight:700;
+    letter-spacing:0.6px;
+    text-transform:uppercase;
+}
+
+.alert-rule-title strong{
+    color:var(--primary);
+    font-size:10px;
+}
+
+.alert-rule-stats{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.alert-rule-stats>div{
+    min-width:48px;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.alert-rule-stats span{
+    color:var(--text-light);
+    font-size:8px;
+}
+
+.alert-rule-stats strong{
+    color:var(--text-primary);
+    font-size:11px;
+}
+
+@media(max-width:650px){
+    .alert-rule-info{
+        align-items:flex-start;
+        flex-direction:column;
+    }
+
+    .alert-rule-stats{
+        width:100%;
+        justify-content:space-between;
+        gap:10px;
+    }
+}

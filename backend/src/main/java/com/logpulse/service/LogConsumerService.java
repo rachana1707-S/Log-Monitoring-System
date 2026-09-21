@@ -13,7 +13,7 @@ public class LogConsumerService {
 
     private final LogRepository logRepository;
     private final SimpMessagingTemplate messagingTemplate;
-    private final AlertService alertService;
+    private final AlertRuleEngine alertRuleEngine;
 
     @KafkaListener(
             topics="log-events",
@@ -33,7 +33,7 @@ public class LogConsumerService {
                 savedLog
         );
 
-        alertService.processLog(savedLog);
+        alertRuleEngine.evaluate(savedLog);
 
         System.out.println(
                 "Broadcast log through WebSocket: "

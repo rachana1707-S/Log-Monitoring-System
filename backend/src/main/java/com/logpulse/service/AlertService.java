@@ -2,8 +2,6 @@ package com.logpulse.service;
 
 import com.logpulse.model.Alert;
 import com.logpulse.model.AlertStatus;
-import com.logpulse.model.LogEntry;
-import com.logpulse.model.LogLevel;
 import com.logpulse.repository.AlertRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,26 +15,6 @@ import java.util.stream.StreamSupport;
 public class AlertService {
 
     private final AlertRepository alertRepository;
-
-    public void processLog(LogEntry log) {
-        if(log.getLevel()==null){
-            return;
-        }
-
-        if(log.getLevel()!=LogLevel.ERROR&&
-                log.getLevel()!=LogLevel.FATAL){
-            return;
-        }
-
-        Alert alert=Alert.fromLog(log);
-
-        alertRepository.save(alert);
-
-        System.out.println(
-                "Alert created for service: "
-                        +log.getService()
-        );
-    }
 
     public List<Alert> getAlerts() {
         return StreamSupport

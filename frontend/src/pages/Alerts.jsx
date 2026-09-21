@@ -1,5 +1,6 @@
 import {useCallback,useEffect,useState} from "react";
 import {
+    FiActivity,
     FiAlertCircle,
     FiAlertTriangle,
     FiCheckCircle,
@@ -53,6 +54,8 @@ const Alerts=()=>{
                         :alert
                 )
             );
+
+            setError("");
         }catch(err){
             console.error(err);
             setError("Unable to resolve alert.");
@@ -97,6 +100,17 @@ const Alerts=()=>{
         return new Date(timestamp).toLocaleString();
     };
 
+    const formatRuleName=(ruleType)=>{
+        if(!ruleType){
+            return "";
+        }
+
+        return ruleType
+            .replaceAll("_"," ")
+            .toLowerCase()
+            .replace(/\b\w/g,letter=>letter.toUpperCase());
+    };
+
     return(
         <div className="page">
             <div className="page-header">
@@ -127,7 +141,11 @@ const Alerts=()=>{
             {error&&(
                 <div className="error-message">
                     <FiAlertCircle/>
-                    {error}
+
+                    <div>
+                        <strong>Alert service unavailable</strong>
+                        <span>{error}</span>
+                    </div>
                 </div>
             )}
 
@@ -180,8 +198,10 @@ const Alerts=()=>{
             <div className="alerts-toolbar">
                 <div>
                     <h2>Detected Incidents</h2>
+
                     <p>
-                        Alerts generated from ERROR and FATAL log events.
+                        Alerts generated from application log patterns
+                        and monitoring rules.
                     </p>
                 </div>
 
@@ -283,7 +303,9 @@ const Alerts=()=>{
                                 <div className="alert-details">
                                     <div>
                                         <FiServer/>
-                                        <span>{alert.service}</span>
+                                        <span>
+                                            {alert.service||"Unknown service"}
+                                        </span>
                                     </div>
 
                                     {alert.traceId&&(
@@ -291,10 +313,61 @@ const Alerts=()=>{
                                             <span className="trace-label">
                                                 Trace
                                             </span>
+
                                             <code>{alert.traceId}</code>
                                         </div>
                                     )}
                                 </div>
+
+                                {alert.ruleType&&(
+                                    <div className="alert-rule-info">
+                                        <div className="alert-rule-title">
+                                            <div className="alert-rule-heading">
+                                                <FiActivity/>
+                                                <span>Triggered Rule</span>
+                                            </div>
+
+                                            <strong>
+                                                {formatRuleName(
+                                                    alert.ruleType
+                                                )}
+                                            </strong>
+                                        </div>
+
+                                        <div className="alert-rule-stats">
+                                            <div>
+                                                <span>Observed</span>
+                                                <strong>
+                                                    {
+                                                        alert.observedCount
+                                                        ??"-"
+                                                    }
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Threshold</span>
+                                                <strong>
+                                                    {
+                                                        alert.threshold
+                                                        ??"-"
+                                                    }
+                                                </strong>
+                                            </div>
+
+                                            <div>
+                                                <span>Window</span>
+                                                <strong>
+                                                    {
+                                                        alert.windowSeconds
+                                                            ?`${alert.windowSeconds}s`
+                                                            :"-"
+                                                    }
+                                                </strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             {alert.status==="ACTIVE"&&(
