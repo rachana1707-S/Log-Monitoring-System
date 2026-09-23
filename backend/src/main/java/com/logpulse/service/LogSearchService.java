@@ -1,39 +1,126 @@
 package com.logpulse.service;
 
+import com.logpulse.dto.LogSearchResponse;
 import com.logpulse.model.LogEntry;
-import com.logpulse.model.LogLevel;
-import com.logpulse.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.elasticsearch.client.elc.NativeQuery;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
 public class LogSearchService {
 
-    private final LogRepository repository;
+    private final ElasticsearchOperations elasticsearchOperations;
 
-    public List<LogEntry> getAllLogs() {
+    public LogSearchResponse search(
+            String service,
+            String level,
+            String environment,
+            String keyword,
+            Instant startTime,
+            Instant endTime,
+            int page,
+            int size
+    ) {
+        int safePage=Math.max(page,0);
+        int safeSize=Math.min(Math.max(size,1),100);
 
-        return StreamSupport
-                .stream(repository.findAll().spliterator(), false)
+        NativeQuery query=NativeQuery.builder()
+                .withQuery(q->q.bool(bool->{
+                    if(service!=null&&!service.isBlank()){
+                        bool.filter(f->f.term(t->t
+                                .field("service")
+                                .value(service)
+                        ));
+                    }
+
+                    if(level!=null&&!level.isBlank()){
+                        bool.filter(f->f.term(t->t
+                                .field("level")
+                                .value(level)
+                        ));
+                    }
+
+                    if(environment!=null&&!environment.isBlank()){
+                        bool.filter(f->f.term(t->t
+                                .field("environment")
+                                .value(environment)
+                        ));
+                    }
+
+                    if(keyword!=null&&!keyword.isBlank()){
+                        bool.must(m->m.match(match->match
+                                .field("message")
+                                .query(keyword)
+                        ));
+                    }
+
+                    if(startTime!=null||endTime!=null){
+                        bool.filter(f->f.range(range->range
+                                .date(date->{
+                                    date.field("timestamp");
+
+                                    if(startTime!=null){
+                                        date.gte(startTime.toString());
+                                    }
+
+                                    if(endTime!=null){
+                                        date.lte(endTime.toString());
+                                    }
+
+                                    return date;
+                                })
+                        ));
+                    }
+
+                    return bool;
+                }))
+                .withPageable(
+                        PageRequest.of(
+                                safePage,
+                                safeSize,
+                                Sort.by(
+                                        Sort.Direction.DESC,
+                                        "timestamp"
+                                )
+                        )
+                )
+                .build();
+
+        SearchHits<LogEntry> searchHits=
+                elasticsearchOperations.search(
+                        query,
+                        LogEntry.class
+                );
+
+        List<LogEntry> logs=searchHits
+                .stream()
+                .map(SearchHit::getContent)
                 .toList();
-    }
 
-    public List<LogEntry> findByService(String service) {
+        long totalElements=searchHits.getTotalHits();
 
-        return repository.findByService(service);
-    }
+        int totalPages=
+                totalElements==0
+                        ?0
+                        :(int)Math.ceil(
+                                (double)totalElements/safeSize
+                        );
 
-    public List<LogEntry> findByLevel(LogLevel level) {
-
-        return repository.findByLevel(level);
-    }
-
-    public List<LogEntry> search(String query) {
-
-        return repository.findByMessageContaining(query);
+        return new LogSearchResponse(
+                logs,
+                safePage,
+                safeSize,
+                totalElements,
+                totalPages
+        );
     }
 }

@@ -1,38 +1,52 @@
-import axios from "axios";
+const API_URL="http://localhost:8080/api/logs";
 
-const API_URL = "http://localhost:8080/api/logs";
+export const getLogs=async()=>{
+    const response=await fetch(API_URL);
 
-export const getLogs = async () => {
-    const response = await axios.get(API_URL);
-    return response.data;
+    if(!response.ok){
+        throw new Error("Failed to fetch logs");
+    }
+
+    return response.json();
 };
 
-export const getLogsByService = async (service) => {
-    const response = await axios.get(API_URL, {
-        params: {
-            service
-        }
-    });
+export const searchLogs=async(filters={})=>{
+    const params=new URLSearchParams();
 
-    return response.data;
-};
+    if(filters.service){
+        params.append("service",filters.service);
+    }
 
-export const getLogsByLevel = async (level) => {
-    const response = await axios.get(API_URL, {
-        params: {
-            level
-        }
-    });
+    if(filters.level){
+        params.append("level",filters.level);
+    }
 
-    return response.data;
-};
+    if(filters.environment){
+        params.append("environment",filters.environment);
+    }
 
-export const searchLogs = async (query) => {
-    const response = await axios.get(API_URL, {
-        params: {
-            q: query
-        }
-    });
+    if(filters.keyword){
+        params.append("keyword",filters.keyword);
+    }
 
-    return response.data;
+    if(filters.startTime){
+        params.append("startTime",filters.startTime);
+    }
+
+    if(filters.endTime){
+        params.append("endTime",filters.endTime);
+    }
+
+    params.append("page",filters.page??0);
+    params.append("size",filters.size??25);
+
+    const response=await fetch(
+        `${API_URL}/search?${params.toString()}`
+    );
+
+    if(!response.ok){
+        throw new Error("Failed to search logs");
+    }
+
+    return response.json();
 };
