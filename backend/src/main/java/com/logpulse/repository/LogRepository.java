@@ -19,4 +19,5 @@ public interface LogRepository
     );
 
     List<LogEntry> findByMessageContaining(String message);
+    List<LogEntry> findByTraceId(String traceId);
 }
