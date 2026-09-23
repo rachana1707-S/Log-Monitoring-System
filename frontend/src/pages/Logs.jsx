@@ -1,4 +1,5 @@
 import {useCallback,useEffect,useMemo,useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {
     FiAlertCircle,
     FiChevronLeft,
@@ -6,7 +7,7 @@ import {
     FiClock,
     FiDatabase,
     FiFilter,
-    FiHash,
+    FiGitBranch,
     FiRefreshCw,
     FiSearch,
     FiServer,
@@ -27,6 +28,8 @@ const EMPTY_FILTERS={
 };
 
 const Logs=()=>{
+    const navigate=useNavigate();
+
     const [logs,setLogs]=useState([]);
     const [filters,setFilters]=useState(EMPTY_FILTERS);
     const [loading,setLoading]=useState(true);
@@ -149,6 +152,16 @@ const Logs=()=>{
             top:0,
             behavior:"smooth"
         });
+    };
+
+    const openTrace=(traceId)=>{
+        if(!traceId){
+            return;
+        }
+
+        navigate(
+            `/traces/${encodeURIComponent(traceId)}`
+        );
     };
 
     const services=useMemo(()=>{
@@ -335,12 +348,30 @@ const Logs=()=>{
                                 <option value="">
                                     All Levels
                                 </option>
-                                <option value="TRACE">TRACE</option>
-                                <option value="DEBUG">DEBUG</option>
-                                <option value="INFO">INFO</option>
-                                <option value="WARN">WARN</option>
-                                <option value="ERROR">ERROR</option>
-                                <option value="FATAL">FATAL</option>
+
+                                <option value="TRACE">
+                                    TRACE
+                                </option>
+
+                                <option value="DEBUG">
+                                    DEBUG
+                                </option>
+
+                                <option value="INFO">
+                                    INFO
+                                </option>
+
+                                <option value="WARN">
+                                    WARN
+                                </option>
+
+                                <option value="ERROR">
+                                    ERROR
+                                </option>
+
+                                <option value="FATAL">
+                                    FATAL
+                                </option>
                             </select>
                         </div>
 
@@ -378,15 +409,19 @@ const Logs=()=>{
                                 <option value="ALL">
                                     All Time
                                 </option>
+
                                 <option value="15_MIN">
                                     Last 15 minutes
                                 </option>
+
                                 <option value="1_HOUR">
                                     Last 1 hour
                                 </option>
+
                                 <option value="6_HOURS">
                                     Last 6 hours
                                 </option>
+
                                 <option value="24_HOURS">
                                     Last 24 hours
                                 </option>
@@ -430,6 +465,7 @@ const Logs=()=>{
                     <div className="log-result-count">
                         <FiDatabase/>
                         <strong>{totalElements}</strong>
+
                         <span>
                             {totalElements===1?"log":"logs"} found
                         </span>
@@ -515,10 +551,19 @@ const Logs=()=>{
                                                 )}
 
                                                 {log.traceId&&(
-                                                    <span>
-                                                        <FiHash/>
+                                                    <button
+                                                        type="button"
+                                                        className="trace-link"
+                                                        title="Open distributed trace"
+                                                        onClick={()=>
+                                                            openTrace(
+                                                                log.traceId
+                                                            )
+                                                        }
+                                                    >
+                                                        <FiGitBranch/>
                                                         {log.traceId}
-                                                    </span>
+                                                    </button>
                                                 )}
                                             </div>
                                         </div>
