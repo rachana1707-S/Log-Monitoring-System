@@ -1,4 +1,6 @@
-const API_URL="http://localhost:8080/api/logs";
+import {API_BASE_URL} from "../config";
+
+const API_URL=`${API_BASE_URL}/api/logs`;
 
 export const getLogs=async()=>{
     const response=await fetch(API_URL);

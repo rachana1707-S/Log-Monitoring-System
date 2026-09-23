@@ -1,4 +1,6 @@
-const API_URL="http://localhost:8080/api/alerts";
+import {API_BASE_URL} from "../config";
+
+const API_URL=`${API_BASE_URL}/api/alerts`;
 
 export const getAlerts=async()=>{
     const response=await fetch(API_URL);
