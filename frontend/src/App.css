@@ -4166,3 +4166,264 @@
         grid-template-columns:1fr;
     }
 }
+
+/* =========================
+   TYPOGRAPHY IMPROVEMENTS
+========================= */
+
+body{
+    font-size:14px;
+}
+
+/* Page headings */
+
+.page-header h1{
+    font-size:28px;
+}
+
+.page-header p{
+    font-size:13px;
+    line-height:1.6;
+}
+
+.page-label{
+    font-size:11px;
+}
+
+/* Buttons */
+
+.primary-button,
+.refresh-button,
+.log-search-button,
+.log-reset-button,
+.pause-button,
+.resume-button,
+.clear-button{
+    font-size:12px;
+}
+
+/* Dashboard metric cards */
+
+.metric-card-title{
+    font-size:11px;
+}
+
+.metric-card-value{
+    font-size:25px;
+}
+
+.metric-card-subtitle{
+    font-size:10px;
+}
+
+/* Section headings */
+
+.section-header h2,
+.services-section-header h2,
+.log-results-header h2,
+.log-search-panel-header h2{
+    font-size:16px;
+}
+
+.section-header p,
+.services-section-header p,
+.log-results-header p,
+.log-search-panel-header p{
+    font-size:11px;
+    line-height:1.5;
+}
+
+/* Tables */
+
+.log-table th{
+    font-size:10px;
+}
+
+.log-table td{
+    font-size:11px;
+}
+
+/* Charts */
+
+.chart-card h3,
+.analytics-card h3{
+    font-size:13px;
+}
+
+/* Live logs */
+
+.live-count{
+    font-size:11px;
+}
+
+.live-select{
+    font-size:11px;
+}
+
+.live-log-row{
+    font-size:11px;
+}
+
+.live-time,
+.live-service,
+.live-message,
+.live-host{
+    font-size:11px;
+}
+
+.terminal-title{
+    font-size:12px;
+}
+
+.terminal-status{
+    font-size:10px;
+}
+
+/* Log Explorer */
+
+.log-filter-field label{
+    font-size:10px;
+}
+
+.log-filter-field select{
+    font-size:11px;
+}
+
+.log-keyword-search input{
+    font-size:12px;
+}
+
+.log-result-count{
+    font-size:11px;
+}
+
+.log-result-time strong{
+    font-size:11px;
+}
+
+.log-result-time span{
+    font-size:10px;
+}
+
+.log-result-service{
+    font-size:10px;
+}
+
+.log-result-message{
+    font-size:12px;
+    line-height:1.55;
+}
+
+.log-result-meta{
+    font-size:10px;
+}
+
+.environment-tag{
+    font-size:9px;
+}
+
+/* Pagination */
+
+.pagination-summary{
+    font-size:11px;
+}
+
+.pagination-controls span{
+    font-size:11px;
+}
+
+.pagination-controls button{
+    font-size:11px;
+}
+
+/* Services */
+
+.service-summary-card span{
+    font-size:10px;
+}
+
+.service-summary-card strong{
+    font-size:21px;
+}
+
+.service-card-name h3{
+    font-size:14px;
+}
+
+.service-card-name span{
+    font-size:10px;
+}
+
+.service-status-badge{
+    font-size:9px;
+}
+
+.service-card-metrics span{
+    font-size:9px;
+}
+
+.service-card-metrics strong{
+    font-size:16px;
+}
+
+.service-error-rate-header span{
+    font-size:10px;
+}
+
+.service-error-rate-header strong{
+    font-size:11px;
+}
+
+.service-card-footer>div{
+    font-size:9px;
+}
+
+.services-live-status{
+    font-size:10px;
+}
+
+/* Empty/loading states */
+
+.loading-state p{
+    font-size:11px;
+}
+
+.services-empty-state h3,
+.log-search-empty h3,
+.dashboard-empty-state h3{
+    font-size:15px;
+}
+
+.services-empty-state p,
+.log-search-empty p,
+.dashboard-empty-state p{
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* Status and badges */
+
+.live-indicator,
+.ws-status{
+    font-size:10px;
+}
+
+/* Responsive */
+
+@media(max-width:650px){
+    .page-header h1{
+        font-size:24px;
+    }
+
+    .page-header p{
+        font-size:12px;
+    }
+
+    .service-card-name h3{
+        font-size:13px;
+    }
+
+    .log-result-message{
+        font-size:11px;
+    }
+}

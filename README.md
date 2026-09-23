@@ -1,122 +1,158 @@
-# LogPulse
+# 📊 LogPulse
 
 ### Real-Time Distributed Log Monitoring & Analytics Platform
 
-LogPulse is a full-stack distributed log monitoring platform for collecting, processing, searching, analyzing, and monitoring application logs in real time.
+<p align="center">
+  <strong>Collect • Stream • Search • Analyze • Monitor • Alert</strong>
+</p>
 
-It uses **Spring Boot, Apache Kafka, Elasticsearch, WebSockets, and React** to demonstrate a scalable event-driven architecture similar to the core concepts behind modern observability platforms.
-
----
-
-## Overview
-
-Modern applications often consist of multiple services producing large volumes of logs across different environments and hosts.
-
-LogPulse provides a centralized system where application logs can be:
-
-- Ingested through a REST API
-- Published asynchronously through Apache Kafka
-- Processed by Kafka consumers
-- Indexed and searched using Elasticsearch
-- Streamed to the browser using WebSockets
-- Visualized through analytics dashboards
-- Monitored through service health metrics
-- Evaluated by rule-based alerting
-- Investigated using advanced search and filtering
+<p align="center">
+  <img src="https://img.shields.io/badge/Java-17-orange?logo=openjdk" alt="Java"/>
+  <img src="https://img.shields.io/badge/Spring_Boot-4.x-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot"/>
+  <img src="https://img.shields.io/badge/Apache_Kafka-Event_Streaming-231F20?logo=apachekafka&logoColor=white" alt="Kafka"/>
+  <img src="https://img.shields.io/badge/Elasticsearch-Search-005571?logo=elasticsearch&logoColor=white" alt="Elasticsearch"/>
+  <img src="https://img.shields.io/badge/React-Frontend-61DAFB?logo=react&logoColor=black" alt="React"/>
+  <img src="https://img.shields.io/badge/WebSocket-Real_Time-218DAE" alt="WebSocket"/>
+</p>
 
 ---
 
-## Dashboard
+## 🚀 Overview
+
+**LogPulse** is a full-stack distributed log monitoring platform for collecting, processing, searching, analyzing, and monitoring application logs in real time.
+
+It uses **Spring Boot, Apache Kafka, Elasticsearch, WebSockets, and React** to demonstrate an event-driven architecture inspired by modern observability and log-monitoring platforms.
+
+Applications send structured logs to LogPulse, where they move through an asynchronous processing pipeline before being indexed, analyzed, monitored, and streamed to the frontend.
+
+### ✨ What LogPulse Can Do
+
+- 📥 Collect structured application logs through a REST API
+- ⚡ Publish log events asynchronously through Apache Kafka
+- 🔄 Process events using Kafka consumers
+- 🔎 Index and search logs using Elasticsearch
+- 📡 Stream incoming logs to the browser using WebSockets
+- 📊 Display real-time monitoring analytics
+- 🚨 Detect incidents using alert rules
+- 🖥️ Monitor health across multiple application services
+- 🔍 Search logs using multiple filters
+- 📄 Paginate large Elasticsearch result sets
+- 🧵 Correlate events using trace IDs
+
+---
+
+# 📸 Application Preview
+
+## 📊 Monitoring Dashboard
 
 <p align="center">
   <img src="docs/images/dashboard.png" alt="LogPulse Dashboard" width="900"/>
 </p>
 
-The dashboard provides a high-level view of the logging environment including:
+The dashboard provides a centralized overview of the logging environment.
 
-- Total log volume
-- Error count
-- Warning count
-- Active services
-- Error rate
-- Severity distribution
-- Service activity
-- Logs over time
-- Recent application events
+It displays:
+
+- 📚 Total logs
+- 🔴 Error count
+- 🟡 Warning count
+- 🖥️ Active services
+- 📈 Error rate
+- 📊 Severity distribution
+- ⚙️ Service activity
+- 🕐 Logs over time
+- 📝 Recent application events
 
 ---
 
-## System Architecture
+# 🏗️ System Architecture
 
 ```mermaid
 flowchart LR
-    A[Applications] -->|HTTP Logs| B[Spring Boot Ingestion API]
+    A["💻 Applications"] -->|"HTTP Logs"| B["🌱 Spring Boot API"]
 
-    B --> C[Apache Kafka]
+    B --> C["📨 Apache Kafka"]
 
-    C --> D[Kafka Consumer]
+    C --> D["⚙️ Kafka Consumer"]
 
-    D --> E[Elasticsearch]
-    D --> F[WebSocket]
-    D --> G[Alert Rule Engine]
+    D --> E["🔎 Elasticsearch"]
+    D --> F["📡 WebSocket"]
+    D --> G["🚨 Alert Engine"]
 
-    G --> H[Alert Index]
+    G --> H["🚨 Alert Index"]
 
-    E --> I[Search Service]
-    E --> J[Analytics Service]
-    E --> K[Service Monitoring]
+    E --> I["🔍 Search Service"]
+    E --> J["📊 Analytics Service"]
+    E --> K["🖥️ Service Monitoring"]
 
-    I --> L[REST API]
+    I --> L["🌐 REST API"]
     J --> L
     K --> L
     H --> L
 
-    F --> M[React Frontend]
+    F --> M["⚛️ React Frontend"]
     L --> M
 
-    M --> N[Dashboard]
-    M --> O[Log Explorer]
-    M --> P[Live Logs]
-    M --> Q[Alerts]
-    M --> R[Services]
+    M --> N["📊 Dashboard"]
+    M --> O["🔎 Log Explorer"]
+    M --> P["📡 Live Logs"]
+    M --> Q["🚨 Alerts"]
+    M --> R["🖥️ Services"]
 ```
 
-### Log Processing Flow
+## 🔄 Log Processing Flow
 
 ```text
-Application
-    │
-    │ POST /api/logs
-    ▼
-Spring Boot API
-    │
-    ▼
-Apache Kafka
-    │
-    ▼
-Kafka Consumer
-    │
-    ├──────────────► Elasticsearch
-    │
-    ├──────────────► WebSocket
-    │
-    └──────────────► Alert Rule Engine
-                         │
-                         ▼
-                       Alerts
+                     ┌─────────────────────┐
+                     │    💻 Application   │
+                     └──────────┬──────────┘
+                                │
+                         POST /api/logs
+                                │
+                                ▼
+                     ┌─────────────────────┐
+                     │ 🌱 Spring Boot API  │
+                     └──────────┬──────────┘
+                                │
+                                ▼
+                     ┌─────────────────────┐
+                     │   📨 Apache Kafka   │
+                     │     log-events      │
+                     └──────────┬──────────┘
+                                │
+                                ▼
+                     ┌─────────────────────┐
+                     │ ⚙️ Kafka Consumer   │
+                     └──────────┬──────────┘
+                                │
+                ┌───────────────┼───────────────┐
+                │               │               │
+                ▼               ▼               ▼
+        ┌───────────────┐ ┌─────────────┐ ┌─────────────┐
+        │🔎Elasticsearch│ │📡 WebSocket │ │🚨Alert Engine│
+        └───────┬───────┘ └──────┬──────┘ └──────┬──────┘
+                │                │               │
+                ▼                ▼               ▼
+          Search/Analytics   Live Logs        Incidents
 ```
 
-Kafka decouples log ingestion from downstream processing, allowing the ingestion API and log-processing pipeline to evolve independently.
+Kafka decouples log ingestion from downstream processing so the ingestion API does not need to directly perform every storage, monitoring, and real-time operation.
 
 ---
 
-## Features
+# 🧩 Core Features
 
-### Centralized Log Ingestion
+## 📥 Centralized Log Ingestion
 
-Applications can send structured logs through the LogPulse REST API.
+Applications send structured logs through the LogPulse REST API.
 
-Example:
+### Endpoint
+
+```http
+POST /api/logs
+```
+
+### Example
 
 ```bash
 curl -X POST http://localhost:8080/api/logs \
@@ -131,7 +167,9 @@ curl -X POST http://localhost:8080/api/logs \
 }'
 ```
 
-A log contains information such as:
+### 📝 Log Structure
+
+A log can contain:
 
 ```json
 {
@@ -144,44 +182,62 @@ A log contains information such as:
 }
 ```
 
+LogPulse adds and processes information such as the log ID and timestamp as the event moves through the system.
+
 ---
 
-### Kafka-Based Event Pipeline
+# 📨 Apache Kafka Event Pipeline
 
-Incoming logs are published to an Apache Kafka topic.
+Incoming logs are published to a Kafka topic instead of being synchronously processed entirely inside the HTTP request.
 
 ```text
-Producer
-   │
-   ▼
-log-events
-   │
-   ▼
-Consumer
+🌱 Spring Boot Producer
+          │
+          ▼
+┌─────────────────────┐
+│ 📨 Kafka            │
+│                     │
+│ Topic: log-events   │
+└──────────┬──────────┘
+           │
+           ▼
+⚙️ Log Consumer
 ```
 
-This separates ingestion from processing and provides the foundation for asynchronous, distributed log processing.
+### Why Kafka?
+
+Kafka provides the foundation for:
+
+- ⚡ Asynchronous processing
+- 🔌 Producer-consumer decoupling
+- 📈 Horizontal scaling
+- 🔄 Event-driven workflows
+- 🧩 Independent downstream processors
+
+This means additional consumers can eventually be introduced without tightly coupling them to the ingestion API.
 
 ---
 
-### Elasticsearch Storage & Search
+# 🔎 Elasticsearch Storage & Search
 
-Processed logs are indexed in Elasticsearch.
+Processed logs are indexed in **Elasticsearch**.
 
-LogPulse supports filtering by:
+Elasticsearch provides the search layer used by LogPulse for log investigation and analytics.
 
-- Service
-- Severity
-- Environment
-- Message keyword
-- Start time
-- End time
+### Supported Filters
 
-Search results are paginated to avoid returning an unbounded number of log documents to the frontend.
+- 🔍 Message keyword
+- 🖥️ Service
+- 🚦 Severity
+- 🌎 Environment
+- 🕐 Start time
+- 🕐 End time
+
+Results are sorted and paginated on the backend so the frontend does not need to load an unbounded number of documents.
 
 ---
 
-## Log Explorer
+# 🔍 Log Explorer
 
 <p align="center">
   <img src="docs/images/log-explorer.png" alt="LogPulse Log Explorer" width="900"/>
@@ -189,86 +245,110 @@ Search results are paginated to avoid returning an unbounded number of log docum
 
 The Log Explorer provides an interface for investigating indexed application events.
 
-Supported filters include:
+### 🔎 Search Filters
 
 ```text
-Keyword
-Service
-Severity
-Environment
-Time Range
+🔍 Keyword
+🖥️ Service
+🚦 Severity
+🌎 Environment
+🕐 Time Range
 ```
 
-Search results include:
+### 📋 Result Information
+
+Each result can display:
 
 ```text
-Timestamp
-Severity
-Service
-Message
-Environment
-Host
-Trace ID
+🕐 Timestamp
+🚦 Severity
+🖥️ Service
+📝 Message
+🌎 Environment
+💻 Host
+🧵 Trace ID
 ```
 
-Results are retrieved from Elasticsearch using server-side filtering, sorting, and pagination.
+### 📄 Pagination
+
+Search results use server-side pagination.
+
+For example:
+
+```text
+Showing 1 - 25 of 187 logs
+
+◀ Previous     Page 1 of 8     Next ▶
+```
+
+This prevents large search result sets from being loaded into the browser at once.
 
 ---
 
-## Real-Time Log Streaming
+# 📡 Real-Time Log Streaming
 
 <p align="center">
   <img src="docs/images/live-logs.png" alt="LogPulse Live Logs" width="900"/>
 </p>
 
-LogPulse streams processed logs to connected browsers through WebSockets.
+After a Kafka consumer processes an event, LogPulse can broadcast it to connected browsers using WebSockets.
 
 ```text
-Kafka Consumer
-      │
-      ▼
-Spring WebSocket
-      │
-      ▼
+📨 Kafka
+   │
+   ▼
+⚙️ Consumer
+   │
+   ▼
+📡 Spring WebSocket
+   │
+   ▼
 /topic/logs
-      │
-      ▼
-React Live Logs
+   │
+   ▼
+⚛️ React
+   │
+   ▼
+📟 Live Logs
 ```
 
-The Live Logs interface supports:
+### Live Logs Features
 
-- Real-time event streaming
-- Severity filtering
-- Pause and resume
-- Clearing the local stream
-- Connection status
-- Service and host visibility
+- 🟢 Connection status
+- 📡 Real-time event streaming
+- 🚦 Severity filtering
+- ⏸️ Pause stream
+- ▶️ Resume stream
+- 🗑️ Clear local events
+- 🖥️ Service visibility
+- 💻 Host visibility
+
+This allows new events to appear without repeatedly polling the REST API.
 
 ---
 
-## Analytics
+# 📊 Analytics
 
 LogPulse calculates monitoring statistics from indexed logs.
 
-Examples include:
+### Current Metrics
 
-```text
-Total Logs
-Errors
-Warnings
-Active Services
-Error Rate
-Severity Distribution
-Service Distribution
-Logs Over Time
-```
+| Metric | Description |
+|---|---|
+| 📚 **Total Logs** | Number of indexed log events |
+| 🔴 **Errors** | Logs with error severity |
+| 🟡 **Warnings** | Warning-level events |
+| 🖥️ **Active Services** | Services represented in the logs |
+| 📈 **Error Rate** | Percentage of logs classified as errors |
+| 📊 **Severity Distribution** | Log count grouped by severity |
+| ⚙️ **Service Distribution** | Activity grouped by service |
+| 🕐 **Logs Over Time** | Log activity across time |
 
 These metrics power the main monitoring dashboard.
 
 ---
 
-## Alerting
+# 🚨 Alerting & Incident Detection
 
 <p align="center">
   <img src="docs/images/alerts.png" alt="LogPulse Alerts" width="900"/>
@@ -276,124 +356,132 @@ These metrics power the main monitoring dashboard.
 
 LogPulse includes a rule-based incident detection system.
 
-One implemented rule monitors error frequency:
+One implemented rule monitors repeated error events.
 
 ```text
-5 ERROR/FATAL logs
-from the same service
-within 60 seconds
-        │
-        ▼
-CRITICAL incident
+🔴 ERROR / FATAL
+       │
+       ▼
+Same application service
+       │
+       ▼
+5 events within 60 seconds
+       │
+       ▼
+🚨 CRITICAL INCIDENT
 ```
 
-Generated incidents contain rule metadata such as:
+### Incident Information
 
-```text
-Rule
-Observed Count
-Threshold
-Window
-Service
-Severity
-Status
-Trace ID
-Timestamp
-```
+Generated alerts can contain:
 
-### Incident Deduplication
+- 🚨 Alert severity
+- 🖥️ Service
+- 📜 Rule
+- 🔢 Observed count
+- 🎯 Threshold
+- ⏱️ Time window
+- 🧵 Trace ID
+- 🕐 Timestamp
+- 📌 Incident status
+
+---
+
+## 🛡️ Alert Deduplication
 
 LogPulse prevents repeated active incidents for the same service and rule.
 
 ```text
-Threshold reached
-       │
-       ▼
+🚨 Threshold Reached
+        │
+        ▼
 Matching ACTIVE alert?
-       │
-   ┌───┴───┐
-  YES      NO
-   │        │
+        │
+    ┌───┴───┐
+    │       │
+   YES      NO
+    │       │
+    ▼       ▼
 Suppress   Create
-duplicate  incident
+Duplicate  Incident
 ```
 
-Once an incident is resolved, a future threshold violation can create a new incident.
+Once an incident is resolved, a future threshold violation can create another incident.
 
 ---
 
-## Service Health Monitoring
+# 🖥️ Service Health Monitoring
 
 <p align="center">
   <img src="docs/images/services.png" alt="LogPulse Service Monitoring" width="900"/>
 </p>
 
-LogPulse derives service-level health information from indexed logs.
+The Services page provides a service-level view of application activity.
 
 Each service displays:
 
-- Total logs
-- Error count
-- Warning count
-- Error rate
-- Last activity
-- Current health status
+- 📚 Total logs
+- 🔴 Errors
+- 🟡 Warnings
+- 📈 Error rate
+- 🕐 Last activity
+- ❤️ Current health status
 
-Current demonstration health rules:
+### ❤️ Health States
 
-| Condition | Status |
+| Condition | Health |
 |---|---|
-| No recent activity | `INACTIVE` |
-| Error rate >= 20% | `CRITICAL` |
-| Error rate >= 10% | `DEGRADED` |
-| Otherwise | `HEALTHY` |
+| Normal error rate with recent activity | 🟢 `HEALTHY` |
+| Error rate >= 10% | 🟡 `DEGRADED` |
+| Error rate >= 20% | 🔴 `CRITICAL` |
+| No recent activity | ⚫ `INACTIVE` |
 
-These thresholds are application-defined monitoring rules for this project and can be made configurable in future versions.
+> These are application-defined demonstration thresholds for the current version of LogPulse rather than universal production monitoring thresholds.
 
 ---
 
-## Tech Stack
+# 🧰 Technology Stack
 
-### Backend
-
-| Technology | Purpose |
-|---|---|
-| Java 17 | Backend language |
-| Spring Boot | Application framework |
-| Spring Web MVC | REST APIs |
-| Spring Kafka | Kafka producer and consumer |
-| Spring Data Elasticsearch | Elasticsearch integration |
-| Spring WebSocket | Real-time communication |
-| Jakarta Validation | API validation |
-| Lombok | Boilerplate reduction |
-| Maven | Build and dependency management |
-
-### Data & Messaging
+## ☕ Backend
 
 | Technology | Purpose |
 |---|---|
-| Apache Kafka | Asynchronous event streaming |
-| Elasticsearch | Log indexing and search |
+| ☕ **Java 17** | Backend programming language |
+| 🌱 **Spring Boot** | Backend application framework |
+| 🌐 **Spring Web MVC** | REST API development |
+| 📨 **Spring Kafka** | Kafka producer and consumer integration |
+| 🔎 **Spring Data Elasticsearch** | Search and persistence |
+| 📡 **Spring WebSocket** | Real-time browser communication |
+| ✅ **Jakarta Validation** | Request validation |
+| 🧹 **Lombok** | Boilerplate reduction |
+| 📦 **Maven** | Build and dependency management |
 
-### Frontend
+## ⚙️ Data & Messaging
 
 | Technology | Purpose |
 |---|---|
-| React | User interface |
-| Vite | Frontend tooling |
-| React Router | Client-side navigation |
-| React Icons | Interface icons |
-| WebSocket/STOMP | Live log updates |
-| CSS | Responsive UI |
+| 📨 **Apache Kafka** | Asynchronous event streaming |
+| 🔎 **Elasticsearch** | Log indexing and search |
+
+## ⚛️ Frontend
+
+| Technology | Purpose |
+|---|---|
+| ⚛️ **React** | User interface |
+| ⚡ **Vite** | Frontend build tooling |
+| 🧭 **React Router** | Client-side routing |
+| 🎨 **React Icons** | Interface icons |
+| 📡 **WebSocket / STOMP** | Real-time log updates |
+| 💅 **CSS** | Responsive interface styling |
 
 ---
 
-## Repository Structure
+# 📁 Repository Structure
 
 ```text
 logpulse/
 │
-├── backend/
+├── ☕ backend/
 │   ├── src/main/java/com/logpulse/
 │   │   ├── config/
 │   │   ├── controller/
@@ -408,7 +496,7 @@ logpulse/
 │   │
 │   └── pom.xml
 │
-├── frontend/
+├── ⚛️ frontend/
 │   ├── src/
 │   │   ├── api/
 │   │   ├── components/
@@ -419,29 +507,42 @@ logpulse/
 │   │
 │   └── package.json
 │
-├── docs/
+├── 📸 docs/
 │   └── images/
+│       ├── dashboard.png
+│       ├── log-explorer.png
+│       ├── live-logs.png
+│       ├── alerts.png
+│       └── services.png
 │
 └── README.md
 ```
 
 ---
 
-## API Overview
+# 🌐 API Overview
 
-### Ingest Log
+## 📥 Log Ingestion
 
 ```http
 POST /api/logs
 ```
 
-### Get Logs
+Accepts an application log and publishes it for processing.
+
+---
+
+## 📚 Retrieve Logs
 
 ```http
 GET /api/logs
 ```
 
-### Search Logs
+Returns stored logs used by parts of the monitoring interface.
+
+---
+
+## 🔍 Advanced Log Search
 
 ```http
 GET /api/logs/search
@@ -453,23 +554,48 @@ Example:
 /api/logs/search?service=payment-service&level=ERROR&page=0&size=25
 ```
 
-### Analytics
+Supported query parameters include:
+
+```text
+service
+level
+environment
+keyword
+startTime
+endTime
+page
+size
+```
+
+---
+
+## 📊 Analytics
 
 ```http
 GET /api/analytics
 ```
 
-### Services
+Returns aggregated monitoring statistics.
+
+---
+
+## 🖥️ Services
 
 ```http
 GET /api/services
 ```
 
-### Alerts
+Returns calculated service health information.
+
+---
+
+## 🚨 Alerts
 
 ```http
 GET /api/alerts
 ```
+
+Returns generated incidents.
 
 ### Active Alerts
 
@@ -485,27 +611,27 @@ PATCH /api/alerts/{id}/resolve
 
 ---
 
-## Running Locally
+# 💻 Running LogPulse Locally
 
-### Prerequisites
+## 📋 Prerequisites
 
 Install:
 
 ```text
-Java 17+
-Node.js
-npm
-Apache Kafka
-Elasticsearch
+☕ Java 17+
+🟢 Node.js
+📦 npm
+📨 Apache Kafka
+🔎 Elasticsearch
 ```
 
-Verify Java:
+Check Java:
 
 ```bash
 java -version
 ```
 
-Verify Node:
+Check Node:
 
 ```bash
 node --version
@@ -514,9 +640,9 @@ npm --version
 
 ---
 
-### Start Infrastructure
+## 1️⃣ Start Infrastructure
 
-Start Elasticsearch and Kafka using your local configuration.
+Start Elasticsearch and Apache Kafka using your local configuration.
 
 Verify Elasticsearch:
 
@@ -524,16 +650,20 @@ Verify Elasticsearch:
 curl http://localhost:9200
 ```
 
+You should receive information about the running Elasticsearch node.
+
 ---
 
-### Start Backend
+## 2️⃣ Start the Backend
+
+From the project root:
 
 ```bash
 cd backend
 ./mvnw spring-boot:run
 ```
 
-Backend:
+The backend runs at:
 
 ```text
 http://localhost:8080
@@ -541,7 +671,7 @@ http://localhost:8080
 
 ---
 
-### Start Frontend
+## 3️⃣ Start the Frontend
 
 Open another terminal:
 
@@ -551,13 +681,13 @@ npm install
 npm run dev
 ```
 
-Vite will print the frontend development URL in the terminal.
+Vite will display the local frontend URL in the terminal.
 
 ---
 
-## Example Test Data
+# 🧪 Testing the Pipeline
 
-Send an informational event:
+## 🟢 Send an INFO Event
 
 ```bash
 curl -X POST http://localhost:8080/api/logs \
@@ -572,7 +702,7 @@ curl -X POST http://localhost:8080/api/logs \
 }'
 ```
 
-Send an error:
+## 🔴 Send an ERROR Event
 
 ```bash
 curl -X POST http://localhost:8080/api/logs \
@@ -587,157 +717,340 @@ curl -X POST http://localhost:8080/api/logs \
 }'
 ```
 
-The event flows through:
+The event follows this pipeline:
 
 ```text
-REST API
-   ↓
-Kafka
-   ↓
-Consumer
-   ↓
-Elasticsearch
-   ├──► Analytics
-   ├──► Search
-   ├──► Service Monitoring
-   └──► Alert Detection
+📱 Application
+     │
+     ▼
+🌐 REST API
+     │
+     ▼
+📨 Kafka
+     │
+     ▼
+⚙️ Consumer
+     │
+     ├────────► 🔎 Elasticsearch
+     │                │
+     │                ├──► 🔍 Search
+     │                ├──► 📊 Analytics
+     │                └──► 🖥️ Service Monitoring
+     │
+     ├────────► 🚨 Alert Detection
+     │
+     └────────► 📡 WebSocket
+                      │
+                      ▼
+                 📟 Live Logs
+```
 
-Consumer
-   ↓
+---
+
+# 💡 Design Decisions
+
+## 📨 Why Apache Kafka?
+
+Without Kafka, the ingestion API could directly perform:
+
+```text
+HTTP Request
+    │
+    ├── Save Elasticsearch
+    ├── Evaluate Alerts
+    ├── Calculate Monitoring
+    └── Broadcast WebSocket
+```
+
+That tightly couples ingestion to downstream processing.
+
+LogPulse instead uses:
+
+```text
+HTTP Request
+      │
+      ▼
+    Kafka
+      │
+      ▼
+Consumers
+```
+
+This separates event ingestion from event processing and provides a foundation for additional consumers and horizontal scaling.
+
+---
+
+## 🔎 Why Elasticsearch?
+
+Application logs are search-oriented data.
+
+LogPulse needs to search across fields such as:
+
+```text
+message
+service
+severity
+environment
+timestamp
+```
+
+Elasticsearch provides useful capabilities for this workload including:
+
+- 🔍 Full-text search
+- 🎯 Structured filtering
+- 🕐 Time-based queries
+- ↕️ Sorting
+- 📄 Pagination
+
+---
+
+## 📡 Why WebSockets?
+
+Without WebSockets, the browser would need to repeatedly request:
+
+```text
+GET /api/logs
+GET /api/logs
+GET /api/logs
+GET /api/logs
+```
+
+Instead:
+
+```text
+New Log
+   │
+   ▼
+Backend
+   │
+   ▼
 WebSocket
-   ↓
-Live Logs
+   │
+   ▼
+Browser
 ```
 
----
-
-## Design Decisions
-
-### Why Kafka?
-
-Kafka separates log ingestion from downstream processing.
-
-Instead of performing storage, alert evaluation, and real-time delivery directly inside the HTTP request, LogPulse publishes the event and allows consumers to process it asynchronously.
-
-### Why Elasticsearch?
-
-Logs are search-oriented data.
-
-Elasticsearch provides capabilities useful for this workload, including:
-
-- Full-text search
-- Structured filtering
-- Time-based queries
-- Sorting
-- Pagination
-
-### Why WebSockets?
-
-Polling the backend repeatedly for new logs creates unnecessary requests.
-
-WebSockets allow LogPulse to push newly processed events directly to connected clients.
-
-### Why Server-Side Pagination?
-
-A monitoring platform can accumulate large numbers of log events.
-
-The Log Explorer therefore requests a limited page of results rather than loading the entire matching dataset into the browser.
+New events can be pushed directly to connected clients.
 
 ---
 
-## Current Architecture vs. Future Scale
+## 📄 Why Server-Side Pagination?
 
-The current implementation demonstrates the distributed architecture locally while remaining small enough to run as a portfolio project.
+A monitoring system can eventually contain thousands or millions of log events.
 
-For larger workloads, the architecture can evolve toward:
+Loading every matching document into React would not scale well.
+
+LogPulse therefore uses:
 
 ```text
-Multiple ingestion instances
-        │
-        ▼
-Kafka partitions
-        │
-        ▼
-Multiple consumer instances
-        │
-        ▼
-Elasticsearch cluster
+Browser
+   │
+   │ page=0&size=25
+   ▼
+Spring Boot
+   │
+   ▼
+Elasticsearch
+   │
+   ▼
+25 matching documents
 ```
 
-Additional production concerns would include authentication, authorization, retention policies, index lifecycle management, observability of LogPulse itself, TLS, secrets management, rate limiting, retries, dead-letter handling, and configurable alert rules.
+Elasticsearch performs filtering, sorting, and pagination before results are returned.
 
 ---
 
-## Roadmap
+# 📈 Scaling Strategy
 
-- [x] Spring Boot log ingestion API
-- [x] Kafka producer
-- [x] Kafka consumer
-- [x] Elasticsearch persistence
-- [x] Analytics API
-- [x] React monitoring dashboard
-- [x] Real-time WebSocket log streaming
-- [x] Log Explorer
-- [x] Advanced filtering
-- [x] Search pagination
-- [x] Rule-based alerts
-- [x] Incident resolution
-- [x] Alert deduplication
-- [x] Service health monitoring
-- [ ] Distributed trace exploration
-- [ ] Automated backend tests
-- [ ] Dockerized development environment
-- [ ] Cloud deployment
-- [ ] CI/CD pipeline
-- [ ] Configurable alert rules
+The current implementation is designed to demonstrate the architecture locally while remaining practical as a portfolio project.
+
+A larger deployment could evolve toward:
+
+```text
+                   ┌────────────────────┐
+                   │   Load Balancer    │
+                   └─────────┬──────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+          API Node 1     API Node 2     API Node N
+              │              │              │
+              └──────────────┼──────────────┘
+                             ▼
+                      📨 Kafka Cluster
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+          Consumer 1     Consumer 2     Consumer N
+              │              │              │
+              └──────────────┼──────────────┘
+                             ▼
+                   🔎 Elasticsearch Cluster
+```
+
+Additional production concerns would include:
+
+- 🔐 Authentication and authorization
+- 🔒 TLS
+- 🔑 Secrets management
+- 🚦 API rate limiting
+- ♻️ Retry strategies
+- ☠️ Dead-letter queues
+- 🗃️ Log retention policies
+- 🔎 Elasticsearch index lifecycle management
+- 📊 Monitoring LogPulse itself
+- ⚙️ Configurable alert rules
+- 🧪 Automated testing
+- 🔄 CI/CD
 
 ---
 
-## Planned Cloud Architecture
+# ☁️ Planned Cloud Architecture
 
 LogPulse is being designed for cloud deployment while keeping infrastructure costs appropriate for a portfolio project.
 
-A future deployment will separate:
+A cloud deployment can separate the major application layers:
 
 ```text
-React Frontend
-      │
-      ▼
-Spring Boot API
-      │
-      ▼
-Kafka / Event Streaming
-      │
-      ▼
-Elasticsearch
+                    🌐 Internet
+                         │
+                         ▼
+                 ⚛️ React Frontend
+                         │
+                         ▼
+                  🌱 Spring Boot
+                         │
+                         ▼
+                  📨 Event Stream
+                         │
+                         ▼
+                  🔎 Elasticsearch
 ```
 
-Cloud configuration and deployment instructions will be added after the local distributed system is finalized.
+The cloud deployment will be added after the local distributed system is finalized.
+
+Potential deployment areas include:
+
+```text
+Frontend hosting
+Backend compute
+Managed or containerized Kafka
+Managed/search infrastructure
+Container registry
+Monitoring
+CI/CD
+```
+
+The repository should only document specific cloud services after they are actually implemented.
 
 ---
 
-## Engineering Concepts Demonstrated
+# 🗺️ Project Roadmap
 
-LogPulse is designed to demonstrate:
+### ✅ Completed
 
-- Distributed systems
-- Event-driven architecture
-- Producer-consumer patterns
-- Asynchronous processing
-- REST API design
-- Real-time communication
-- Search infrastructure
-- Server-side pagination
-- Incident detection
-- Alert deduplication
-- Service health monitoring
-- Full-stack application development
-- Cloud-oriented system design
+- [x] 🌱 Spring Boot log ingestion API
+- [x] 📨 Kafka producer
+- [x] ⚙️ Kafka consumer
+- [x] 🔎 Elasticsearch persistence
+- [x] 📊 Analytics API
+- [x] ⚛️ React monitoring dashboard
+- [x] 📡 Real-time WebSocket streaming
+- [x] 🔍 Log Explorer
+- [x] 🎯 Advanced log filtering
+- [x] 📄 Elasticsearch pagination
+- [x] 🚨 Rule-based alerts
+- [x] ✅ Incident resolution
+- [x] 🛡️ Alert deduplication
+- [x] 🖥️ Service health monitoring
+
+### 🚧 Next
+
+- [ ] 🧵 Distributed trace exploration
+- [ ] 🧪 Backend unit and integration tests
+- [ ] 🐳 Dockerized development environment
+- [ ] ☁️ Cloud deployment
+- [ ] 🔄 CI/CD pipeline
+- [ ] ⚙️ Configurable alert rules
+- [ ] 🔐 Authentication and authorization
 
 ---
 
-## Author
+# 🎯 Engineering Concepts Demonstrated
 
-**Rachana Sudhakar**
+LogPulse demonstrates practical experience with:
 
-Software Engineer focused on backend systems, distributed applications, full-stack development, and applied AI.
+```text
+🏗️ Distributed Systems
+⚡ Event-Driven Architecture
+📨 Producer-Consumer Pattern
+🔄 Asynchronous Processing
+🌐 REST API Design
+📡 Real-Time Communication
+🔎 Search Infrastructure
+📄 Server-Side Pagination
+🚨 Incident Detection
+🛡️ Alert Deduplication
+🖥️ Service Health Monitoring
+⚛️ Full-Stack Development
+☁️ Cloud-Oriented System Design
+```
+
+---
+
+# 🔮 Next Feature: Distributed Tracing
+
+The next LogPulse feature will use the existing `traceId` field to correlate events generated by the same request across multiple services.
+
+For example:
+
+```text
+🧵 trace-checkout-4821
+
+12:20:01.120
+🌐 api-gateway
+│  Request received
+│
+▼
+12:20:01.184
+📦 order-service
+│  Creating order
+│
+▼
+12:20:01.291
+💳 payment-service
+│  Processing payment
+│
+▼
+12:20:02.018
+🔴 payment-service
+│  Payment gateway timeout
+│
+▼
+12:20:02.031
+📦 order-service
+   Order failed
+```
+
+This will allow LogPulse to move beyond individual log inspection and begin correlating activity across distributed services.
+
+---
+
+# 👩‍💻 Author
+
+### Rachana Sudhakar
+
+Software Engineer focused on:
+
+- ☕ Backend Engineering
+- 🏗️ Distributed Systems
+- ⚛️ Full-Stack Development
+- 🤖 Applied AI
+- ☁️ Cloud Applications
+
+---
+
+<p align="center">
+  <strong>📊 LogPulse</strong><br/>
+  <sub>Real-Time Distributed Log Monitoring & Analytics</sub>
+</p>
